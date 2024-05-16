@@ -1,69 +1,136 @@
-#include <stdio.h>
-struct shapes{
-    int id;
+#include <iostream>
+#include <iomanip>
+#include <vector>
+using namespace std;
+class circles{
+    private:
+        double radius;
+    public:
+        void set_radius(double x){
+            radius = x;
+        }
+        double get_radius(){
+            return radius;
+        }
+        double get_area(){
+            return 3.14*radius * radius;
+        }
+};
+class rectangles{
+    private:
+        double height;
+        double width;
+    public:
+        void set_height(double x){
+            height = x;
+        }
+        void set_width(double x){
+            width = x;
+        }
+
+        double get_height(){
+            return height;
+        }
+        double get_width(){
+            return width;
+        }
+        double get_area(){
+            return height * width;
+        }
+};
+class shapes{
+private:
     char s;
-    double d,h,w;
+    int id;
+public:
+    circles circle;
+    rectangles rectangle;
+    void set_id(int x){
+        id = x;
+    }
+    void set_c(char c){
+        s = c;
+    }
+    int get_id(){
+        return id;
+    }
+    char get_c(){
+        return s;
+    }
+
+
 };
 
 
 int main(){
-    struct shapes shape_array[100];
+    vector<shapes> shape_array(100);
     int a,i=0,j,r=0,c=0;
-    double ra = 0,ca = 0,ta = 0,p1,p2;
-    printf("1.Add a circle\n2.Add a rectangle\n3.List items\n4.Statistics\n5.Exit\n");
+    double ra = 0,ca = 0,ta = 0,p1,p2,tmp;
+    cout << "1.Add a circle\n2.Add a rectangle\n3.List items\n4.Statistics\n5.Exit\n" ;
     while (1){
-        printf("\nPlease enter a key:");
-        scanf("%d",&a);
+        cout << "\nPlease enter a key:";
+        cin >> a;
+        cout << "\n";
         if(a == 1){
-            printf("Circle Input:\n");
-            shape_array[i].id = i+1;
-            shape_array[i].s = 'C';
-            printf("What is the diameter:");
-            scanf("%lf",&shape_array[i].d);
-            ca += 3.1416 * shape_array[i].d * shape_array[i].d * 0.25;
-            ta += 3.1416 * shape_array[i].d * shape_array[i].d * 0.25;
+            cout << "Circle Input:\n";
+            shape_array[i].set_id(i+1);
+            shape_array[i].set_c('C');
+            cout << "What is the radius:";
+            cin >> tmp ;
+            shape_array[i].circle.set_radius(tmp);
+            tmp = shape_array[i].circle.get_area();
+            ca += tmp;
+            ta += tmp;
             c++;
             i++;
         }
-        else if(a == 2){
-            printf("Rectangle Input:\n");
-            shape_array[i].id = i+1;
-            shape_array[i].s = 'R';
-            printf("What is the height:");
-            scanf("%lf",&shape_array[i].h);
-            printf("What is the weight:");
-            scanf("%lf",&shape_array[i].w);
-            ra += 0.5 * shape_array[i].h * shape_array[i].w;
-            ta += 0.5 * shape_array[i].h * shape_array[i].w;;
+         else if(a == 2){
+            cout << "Rectangle Input:\n";
+            shape_array[i].set_id(i+1);
+            shape_array[i].set_c('R');
+            cout << "What is the height:";
+            cin >> tmp ;
+            shape_array[i].rectangle.set_height(tmp);
+            cout << "What is the width:";
+            cin >> tmp ;
+            shape_array[i].rectangle.set_width(tmp);
+            tmp = shape_array[i].rectangle.get_area();
+            ra += tmp;
+            ta += tmp;
             r++;
             i++;
         }
         else if(a == 3){
-            printf("\nListings:\n");
-            printf("Id   	type	dimension\n");
-            printf("=============================\n");
+            cout << "\nListings:\n";
+            cout << "Id   	type	dimension\n";
+            cout << "=============================\n";
             for(j = 0;j<i;j++){
-                if(shape_array[j].s == 'C'){
-                printf("%d.   Circle	%0.2lf\n",shape_array[j].id,shape_array[j].d);
+                if(shape_array[j].get_c() == 'C'){
+                        cout <<  shape_array[j].get_id() << ".   Circle	" <<  shape_array[j].circle.get_radius() << "\n";
+
                 }
                 else{
-                    printf("%d.  Rectangle   %0.2lf X %0.2lf\n",shape_array[j].id,shape_array[j].h,shape_array[j].w);
+                        cout <<  shape_array[j].get_id() << ".   Rectangle	" <<  shape_array[j].rectangle.get_height() << "x" <<  shape_array[j].rectangle.get_width() << "\n";
+
                 }
 
             }
-
-
         }
         else if(a==4){
-            printf("\nStatistics:\n");
+            cout << "\nStatistics:\n";
             p1 = ra/ta*100;
             p2 = ca/ta*100;
-            printf("Total shapes : %d\n",r+c);
-            printf("Total number of Rectangles : %d\n",r);
-            printf("Total number of Circles : %d\n",c);
-            printf("Total area: %0.2lf\n",ta);
-            printf("The total area occupied by rectangles: %0.2lf (%0.2lf %%)\n",ra,p1);
-            printf("The total area occupied by circles:  %0.2lf  (%0.2lf %%) \n",ca,p2);
+            cout <<"Total shapes : " << r+c;
+            cout << "\n";
+            cout <<"Total number of Rectangles : "<< r;
+            cout << "\n";
+            cout <<"Total number of Circles : "<< c;
+            cout << "\n";
+            cout <<"Total area: " << ta;
+            cout << "\n";
+            cout <<"The total area occupied by rectangles: "<< ra << " (" << p1 << "%)" << "\n";
+            cout <<"The total area occupied by circles: "<< ca << " (" << p2 << "%)" << "\n";
+
         }
         else{
             break;
@@ -72,3 +139,6 @@ int main(){
     }
     return 0;
 }
+
+
+
